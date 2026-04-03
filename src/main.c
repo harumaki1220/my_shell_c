@@ -5,6 +5,8 @@
 int main(void)
 {
     char line[1024];
+    char *args[64];
+    int i = 0;
 
     while (1)
     {
@@ -22,7 +24,21 @@ int main(void)
             line[len - 1] = '\0';
         }
 
-        printf("You entered: %s", line);
+        i = 0;
+
+        char *token = strtok(line, " ");
+        while (token != NULL && i < 63)
+        {
+            args[i] = token;
+            i++;
+            token = strtok(NULL, " ");
+        }
+        args[i] = NULL;
+
+        for (int j = 0; j < i; j++)
+        {
+            printf("args[%d]: %s\n", j, args[j]);
+        }
     }
 
     return 0;
