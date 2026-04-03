@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int main(void)
 {
@@ -13,6 +14,12 @@ int main(void)
         {
             printf("\nBye!\n");
             break;
+        }
+
+        int len = strlen(line);
+        if (len > 0 && line[len - 1] == '\n')
+        {
+            line[len - 1] = '\0';
         }
 
         printf("You entered: %s", line);
