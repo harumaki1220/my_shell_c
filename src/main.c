@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 int main(void)
 {
@@ -35,9 +38,27 @@ int main(void)
         }
         args[i] = NULL;
 
-        for (int j = 0; j < i; j++)
+        if (i > 0)
         {
-            printf("args[%d]: %s\n", j, args[j]);
+            pid_t pid = fork();
+
+            if (pid < 0)
+            {
+                perror("fork failed");
+            }
+            else if (pid == 0)
+            {
+                printf("子プロセス: %s を実行する準備中...\n", args[0]);
+                exit(0);
+            }
+            else
+            {
+                printf("親プロセス: 子(PID:%d) が終わるのを待っています。\n",
+                       pid);
+                wait(NULL);
+                printf(
+                    "親プロセス: 子が終わったので次の入力を受け付けます。\n");
+            }
         }
     }
 
