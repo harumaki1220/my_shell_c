@@ -48,6 +48,12 @@ int main(void)
             }
             else if (pid == 0)
             {
+                if (execvp(args[0], args) == -1)
+                {
+                    perror("execvp failed");
+                    exit(1);
+                }
+
                 printf("子プロセス: %s を実行する準備中...\n", args[0]);
                 exit(0);
             }
