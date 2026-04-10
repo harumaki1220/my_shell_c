@@ -40,6 +40,22 @@ int main(void)
 
         if (i > 0)
         {
+            if (strcmp(args[0], "cd") == 0)
+            {
+                // 組み込みコマンド cd の処理
+                if (args[1] == NULL)
+                {
+                    fprintf(stderr, "cd: 引数が足りません\n");
+                }
+                else
+                {
+                    if (chdir(args[1]) != 0)
+                    {
+                        perror("cd");
+                    }
+                }
+                continue; // forkせずに次のループ（入力待ち）へ戻る
+            }
             pid_t pid = fork();
 
             if (pid < 0)
