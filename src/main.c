@@ -56,6 +56,11 @@ int main(void)
                 }
                 continue; // forkせずに次のループ（入力待ち）へ戻る
             }
+            if (strcmp(args[0], "exit") == 0)
+            {
+                printf("Bye!\n");
+                break;
+            }
             pid_t pid = fork();
 
             if (pid < 0)
